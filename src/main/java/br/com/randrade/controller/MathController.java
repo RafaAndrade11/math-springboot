@@ -20,6 +20,7 @@ public class MathController {
 
 	private final AtomicLong counter = new AtomicLong();
 
+	//SOMA
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}",
 			method = RequestMethod.GET)
 	public Double sum(
@@ -46,5 +47,49 @@ public class MathController {
 		String number = strNumber.replaceAll(",", ".");
 		return number.matches("[-+]?[0-9]*\\.?[0-9]+");
 	}
-
+	
+	//SUBTRAÇÃO
+	@RequestMapping(value = "/subtration/{numberOne}/{numberTwo}",
+			method = RequestMethod.GET)
+	public Double subtration(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+			) throws Exception {
+		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value!");
+		}
+		
+		return convertToDouble(numberOne) - convertToDouble(numberTwo);
+	}
+	
+	//MULTIPLICAÇÃO
+	@RequestMapping(value = "/mult/{numberOne}/{numberTwo}",
+			method = RequestMethod.GET)
+	public Double mult(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+			) throws Exception {
+		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value!");
+		}
+		
+		return convertToDouble(numberOne) * convertToDouble(numberTwo);
+	}
+	
+	//DIVISÃO
+	@RequestMapping(value = "/div/{numberOne}/{numberTwo}",
+			method = RequestMethod.GET)
+	public Double div(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+			) throws Exception {
+		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value!");
+		}
+		
+		return convertToDouble(numberOne) / convertToDouble(numberTwo);
+	}
 }
