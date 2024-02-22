@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.randrade.converter.NumberConverter;
 import br.com.randrade.exceptions.UnsupportedMathOperationException;
+import br.com.randrade.operations.Divisao;
+import br.com.randrade.operations.Media;
+import br.com.randrade.operations.Multiplicacao;
+import br.com.randrade.operations.Soma;
+import br.com.randrade.operations.Subtracao;
 
 /**
  * 
@@ -20,6 +25,11 @@ import br.com.randrade.exceptions.UnsupportedMathOperationException;
 public class MathController {
 
 	private final AtomicLong counter = new AtomicLong();
+	private Soma soma = new Soma();
+	private Subtracao sub = new Subtracao();
+	private Divisao divisao = new Divisao();
+	private Multiplicacao multiplicacao = new Multiplicacao();
+	private Media media = new Media();
 
 	//SOMA
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}",
@@ -33,13 +43,13 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value!");
 		}
 		
-		return (NumberConverter.convertToDouble(numberOne)) + (NumberConverter.convertToDouble(numberTwo));
+		return soma.sum(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
 	}
 	
 	//SUBTRAÇÃO
-	@RequestMapping(value = "/subtration/{numberOne}/{numberTwo}",
+	@RequestMapping(value = "/subtraction/{numberOne}/{numberTwo}",
 			method = RequestMethod.GET)
-	public Double subtration(
+	public Double subtraction(
 			@PathVariable(value = "numberOne") String numberOne,
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
@@ -48,7 +58,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value!");
 		}
 		
-		return (NumberConverter.convertToDouble(numberOne)) - (NumberConverter.convertToDouble(numberTwo));
+		return sub.subtraction(NumberConverter.convertToDouble(numberOne),NumberConverter.convertToDouble(numberTwo));
 	}
 	
 	//MULTIPLICAÇÃO
@@ -63,7 +73,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value!");
 		}
 		
-		return (NumberConverter.convertToDouble(numberOne)) * (NumberConverter.convertToDouble(numberTwo));
+		return multiplicacao.mult(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
 	}
 	
 	//DIVISÃO
@@ -78,7 +88,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value!");
 		}
 		
-		return (NumberConverter.convertToDouble(numberOne)) / (NumberConverter.convertToDouble(numberTwo));
+		return divisao.div(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
 	}
 	
 	//MÉDIA
@@ -93,7 +103,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value!");
 		}
 		
-		return ((NumberConverter.convertToDouble(numberOne)) + (NumberConverter.convertToDouble(numberTwo))) / 2;
+		return media.media(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
 	}
 	
 }
